@@ -28,10 +28,35 @@ app.get('/js', (req,res) => {
     res.sendfile(join(dirname(fileURLToPath(import.meta.url)), '/public/main.js'))
 })
 
+app.get('/fighters', (req,res) => {
+    res.status(200).send(db)
+})
 
 app.post('/create-fighter', (req,res) => {
     db.push(req.body);
+    res.status(200).send(db)
+})
+
+app.delete('/delete-fighter/:name', (req,res) => {
+    let deleteName = req.params.name
+    // loop through the database and see if there is a match
+    for( let i=0;i < db.length; i++){
+        if(db[i].name === deleteName){
+            db.splice(i, 1)
+        } 
+    }
+
     res.send(db)
+    //if you find a match, delete the match
+
+    // did you delete anything?
+
+    // 1: yes, send success response
+
+    // 2: no, send failed response
+
+
+    
 })
 
 app.listen(8080, () => {
